@@ -11,17 +11,15 @@
 #include "soundtouch/include/SoundTouch.h"
 #include "PlayBufferQueue.h"
 #include "PlayPcmBean.h"
-#include "include/libavutil/frame.h"
-
-using  namespace  std;
+using namespace soundtouch;
 
 extern "C"
 {
 #include "include/libavcodec/avcodec.h"
-#include <include/libswresample/swresample.h>
+#include "include/libswresample/swresample.h"
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
-#include <include/libavutil/time.h>
+#include "include/libavutil/time.h"
 };
 class  Audio{
 public:

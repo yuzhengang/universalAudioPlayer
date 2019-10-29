@@ -1,9 +1,6 @@
 #include <jni.h>
 #include <string>
-#include "pthread.h"
-#include "AndroidLog.h"
 #include "Playstatus.h"
-#include "CallJava.h"
 #include "FFmpeg.h"
 extern "C"
 {
