@@ -6,7 +6,7 @@ import com.yzg.audioplayer.PlayTimeInfoBean;
  * Created by yangw on 2018-3-25.
  */
 
-public interface WlOnTimeInfoListener {
+public interface OnTimeInfoListener {
 
     void onTimeInfo(PlayTimeInfoBean timeInfoBean);
 

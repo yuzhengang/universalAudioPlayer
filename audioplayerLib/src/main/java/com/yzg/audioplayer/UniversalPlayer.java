@@ -7,15 +7,15 @@ import android.media.MediaFormat;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.yzg.audioplayer.listener.WlOnCompleteListener;
-import com.yzg.audioplayer.listener.WlOnErrorListener;
-import com.yzg.audioplayer.listener.WlOnLoadListener;
-import com.yzg.audioplayer.listener.WlOnParparedListener;
-import com.yzg.audioplayer.listener.WlOnPauseResumeListener;
-import com.yzg.audioplayer.listener.WlOnPcmInfoListener;
-import com.yzg.audioplayer.listener.WlOnRecordTimeListener;
-import com.yzg.audioplayer.listener.WlOnTimeInfoListener;
-import com.yzg.audioplayer.listener.WlOnValumeDBListener;
+import com.yzg.audioplayer.listener.OnCompleteListener;
+import com.yzg.audioplayer.listener.OnErrorListener;
+import com.yzg.audioplayer.listener.OnLoadListener;
+import com.yzg.audioplayer.listener.OnParparedListener;
+import com.yzg.audioplayer.listener.OnPauseResumeListener;
+import com.yzg.audioplayer.listener.OnPcmInfoListener;
+import com.yzg.audioplayer.listener.OnRecordTimeListener;
+import com.yzg.audioplayer.listener.OnTimeInfoListener;
+import com.yzg.audioplayer.listener.OnValumeDBListener;
 import com.yzg.audioplayer.log.PlayerLog;
 
 import java.io.File;
@@ -54,15 +54,15 @@ public class UniversalPlayer {
     private static float pitch = 1.0f;
     private static boolean initmediacodec = false;
     private static MuteEnum muteEnum = MuteEnum.MUTE_CENTER;
-    private WlOnParparedListener wlOnParparedListener;
-    private WlOnLoadListener wlOnLoadListener;
-    private WlOnPauseResumeListener wlOnPauseResumeListener;
-    private WlOnTimeInfoListener wlOnTimeInfoListener;
-    private WlOnErrorListener wlOnErrorListener;
-    private WlOnCompleteListener wlOnCompleteListener;
-    private WlOnValumeDBListener wlOnValumeDBListener;
-    private WlOnRecordTimeListener wlOnRecordTimeListener;
-    private WlOnPcmInfoListener wlOnPcmInfoListener;
+    private OnParparedListener onParparedListener;
+    private OnLoadListener onLoadListener;
+    private OnPauseResumeListener onPauseResumeListener;
+    private OnTimeInfoListener onTimeInfoListener;
+    private OnErrorListener onErrorListener;
+    private OnCompleteListener onCompleteListener;
+    private OnValumeDBListener onValumeDBListener;
+    private OnRecordTimeListener onRecordTimeListener;
+    private OnPcmInfoListener onPcmInfoListener;
 
     /**
      * 设置数据源
@@ -76,42 +76,42 @@ public class UniversalPlayer {
     /**
      * 设置准备接口回调
      *
-     * @param wlOnParparedListener
+     * @param onParparedListener
      */
-    public void setWlOnParparedListener(WlOnParparedListener wlOnParparedListener) {
-        this.wlOnParparedListener = wlOnParparedListener;
+    public void setOnParparedListener(OnParparedListener onParparedListener) {
+        this.onParparedListener = onParparedListener;
     }
 
-    public void setWlOnLoadListener(WlOnLoadListener wlOnLoadListener) {
-        this.wlOnLoadListener = wlOnLoadListener;
+    public void setWlOnLoadListener(OnLoadListener onLoadListener) {
+        this.onLoadListener = onLoadListener;
     }
 
-    public void setWlOnPauseResumeListener(WlOnPauseResumeListener wlOnPauseResumeListener) {
-        this.wlOnPauseResumeListener = wlOnPauseResumeListener;
+    public void setOnPauseResumeListener(OnPauseResumeListener onPauseResumeListener) {
+        this.onPauseResumeListener = onPauseResumeListener;
     }
 
-    public void setWlOnTimeInfoListener(WlOnTimeInfoListener wlOnTimeInfoListener) {
-        this.wlOnTimeInfoListener = wlOnTimeInfoListener;
+    public void setOnTimeInfoListener(OnTimeInfoListener onTimeInfoListener) {
+        this.onTimeInfoListener = onTimeInfoListener;
     }
 
-    public void setWlOnErrorListener(WlOnErrorListener wlOnErrorListener) {
-        this.wlOnErrorListener = wlOnErrorListener;
+    public void setOnErrorListener(OnErrorListener onErrorListener) {
+        this.onErrorListener = onErrorListener;
     }
 
-    public void setWlOnCompleteListener(WlOnCompleteListener wlOnCompleteListener) {
-        this.wlOnCompleteListener = wlOnCompleteListener;
+    public void setOnCompleteListener(OnCompleteListener onCompleteListener) {
+        this.onCompleteListener = onCompleteListener;
     }
 
-    public void setWlOnValumeDBListener(WlOnValumeDBListener wlOnValumeDBListener) {
-        this.wlOnValumeDBListener = wlOnValumeDBListener;
+    public void setOnValumeDBListener(OnValumeDBListener onValumeDBListener) {
+        this.onValumeDBListener = onValumeDBListener;
     }
 
-    public void setWlOnRecordTimeListener(WlOnRecordTimeListener wlOnRecordTimeListener) {
-        this.wlOnRecordTimeListener = wlOnRecordTimeListener;
+    public void setOnRecordTimeListener(OnRecordTimeListener onRecordTimeListener) {
+        this.onRecordTimeListener = onRecordTimeListener;
     }
 
-    public void setWlOnPcmInfoListener(WlOnPcmInfoListener wlOnPcmInfoListener) {
-        this.wlOnPcmInfoListener = wlOnPcmInfoListener;
+    public void setOnPcmInfoListener(OnPcmInfoListener onPcmInfoListener) {
+        this.onPcmInfoListener = onPcmInfoListener;
     }
 
     public void parpared() {
@@ -126,6 +126,246 @@ public class UniversalPlayer {
             }
         }).start();
     }
+    public void start()
+    {
+        if(TextUtils.isEmpty(source))
+        {
+            PlayerLog.d("source is empty");
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setVolume(volumePercent);
+                setMute(muteEnum);
+                setPitch(pitch);
+                setSpeed(speed);
+                n_start();
+            }
+        }).start();
+    }
+
+    public void pause()
+    {
+        n_pause();
+        if(onPauseResumeListener != null)
+        {
+            onPauseResumeListener.onPause(true);
+        }
+    }
+
+    public void resume()
+    {
+        n_resume();
+        if(onPauseResumeListener != null)
+        {
+            onPauseResumeListener.onPause(false);
+        }
+    }
+
+    public void stop()
+    {
+        wlTimeInfoBean = null;
+        duration = -1;
+        stopRecord();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                n_stop();
+            }
+        }).start();
+    }
+
+    public void seek(int secds)
+    {
+        n_seek(secds);
+    }
+
+    public void playNext(String url)
+    {
+        source = url;
+        playNext = true;
+        stop();
+    }
+
+    public int getDuration()
+    {
+        if(duration < 0)
+        {
+            duration = n_duration();
+        }
+        return duration;
+    }
+
+    public void setVolume(int percent)
+    {
+        if(percent >=0 && percent <= 100)
+        {
+            volumePercent = percent;
+            n_volume(percent);
+        }
+    }
+
+    public int getVolumePercent()
+    {
+        return volumePercent;
+    }
+
+    public void setMute(MuteEnum mute)
+    {
+        muteEnum = mute;
+        n_mute(mute.getValue());
+    }
+
+    public void setPitch(float p)
+    {
+        pitch = p;
+        n_pitch(pitch);
+    }
+
+    public void setSpeed(float s)
+    {
+        speed = s;
+        n_speed(speed);
+    }
+
+    public void startRecord(File outfile)
+    {
+        if(!initmediacodec)
+        {
+            audioSamplerate = n_samplerate();
+            if(audioSamplerate > 0)
+            {
+                initmediacodec = true;
+                initMediacodec(audioSamplerate, outfile);
+                n_startstoprecord(true);
+                PlayerLog.d("开始录制");
+            }
+        }
+    }
+
+    public void stopRecord()
+    {
+        if(initmediacodec)
+        {
+            n_startstoprecord(false);
+            releaseMedicacodec();
+            PlayerLog.d("完成录制");
+        }
+    }
+
+    public void pauseRecord()
+    {
+        n_startstoprecord(false);
+        PlayerLog.d("暂停录制");
+    }
+
+    public void resumeRcord()
+    {
+        n_startstoprecord(true);
+        PlayerLog.d("继续录制");
+    }
+
+    public void cutAudioPlay(int start_time, int end_time, boolean showPcm)
+    {
+        if(n_cutaudioplay(start_time, end_time, showPcm))
+        {
+            start();
+        }
+        else
+        {
+            stop();
+            onCallError(2001, "cutaudio params is wrong");
+        }
+    }
+
+
+
+    /**
+     * c++回调java的方法
+     */
+    public void onCallParpared()
+    {
+        if(onParparedListener != null)
+        {
+            onParparedListener.onParpared();
+        }
+    }
+
+    public void onCallLoad(boolean load)
+    {
+        if(onLoadListener != null)
+        {
+           onLoadListener.onLoad(load);
+        }
+    }
+
+    public void onCallTimeInfo(int currentTime, int totalTime)
+    {
+        if(onTimeInfoListener != null)
+        {
+            if(wlTimeInfoBean == null)
+            {
+                wlTimeInfoBean = new PlayTimeInfoBean();
+            }
+            wlTimeInfoBean.setCurrentTime(currentTime);
+            wlTimeInfoBean.setTotalTime(totalTime);
+            onTimeInfoListener.onTimeInfo(wlTimeInfoBean);
+        }
+    }
+
+    public void onCallError(int code, String msg)
+    {
+        if(onErrorListener != null)
+        {
+            stop();
+            onErrorListener.onError(code, msg);
+        }
+    }
+
+    public void onCallComplete()
+    {
+        stop();
+        if(onCompleteListener != null)
+        {
+          onCompleteListener.onComplete();
+        }
+    }
+
+    public void onCallNext()
+    {
+        if(playNext)
+        {
+            playNext = false;
+            parpared();
+        }
+    }
+
+    public void onCallValumeDB(int db)
+    {
+        if(onValumeDBListener != null)
+        {
+           onValumeDBListener.onDbValue(db);
+        }
+    }
+
+    public void onCallPcmInfo(byte[] buffer, int buffersize)
+    {
+        if(onPcmInfoListener != null)
+        {
+           onPcmInfoListener.onPcmInfo(buffer, buffersize);
+        }
+    }
+
+    public void onCallPcmRate(int samplerate)
+    {
+        if(onPcmInfoListener != null)
+        {
+           onPcmInfoListener.onPcmRate(samplerate, 16, 2);
+        }
+    }
+
+
 
     private native void n_parpared(String source);
 
@@ -199,9 +439,9 @@ public class UniversalPlayer {
         if(buffer != null && encoder != null)
         {
             recordTime += size * 1.0 / (audioSamplerate * 2 * (16 / 8));
-            if(wlOnRecordTimeListener != null)
+            if(onRecordTimeListener != null)
             {
-                wlOnRecordTimeListener.onRecordTime((int) recordTime);
+              onRecordTimeListener.onRecordTime((int) recordTime);
             }
             int inputBufferindex = encoder.dequeueInputBuffer(0);
             if(inputBufferindex >= 0)
@@ -340,9 +580,6 @@ public class UniversalPlayer {
         }
         return rate;
     }
-
-
-
 }
 
 

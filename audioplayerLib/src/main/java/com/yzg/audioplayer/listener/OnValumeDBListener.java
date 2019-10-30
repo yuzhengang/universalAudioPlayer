@@ -1,6 +1,6 @@
 package com.yzg.audioplayer.listener;
 
-public interface WlOnValumeDBListener {
+public interface OnValumeDBListener {
 
     void onDbValue(int db);
 

@@ -1,6 +1,6 @@
 package com.yzg.audioplayer.listener;
 
-public interface WlOnRecordTimeListener {
+public interface OnRecordTimeListener {
 
     void onRecordTime(int recordTime);
 

@@ -4,8 +4,8 @@ package com.yzg.audioplayer.listener;
  * Created by yangw on 2018-3-25.
  */
 
-public interface WlOnCompleteListener {
+public interface OnErrorListener {
 
-    void onComplete();
+    void onError(int code, String msg);
 
 }

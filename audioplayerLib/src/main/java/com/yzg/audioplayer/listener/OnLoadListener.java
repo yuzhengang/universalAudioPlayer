@@ -4,8 +4,8 @@ package com.yzg.audioplayer.listener;
  * Created by yangw on 2018-3-25.
  */
 
-public interface WlOnPauseResumeListener {
+public interface OnLoadListener {
 
-    void onPause(boolean pause);
+    void onLoad(boolean load);
 
 }

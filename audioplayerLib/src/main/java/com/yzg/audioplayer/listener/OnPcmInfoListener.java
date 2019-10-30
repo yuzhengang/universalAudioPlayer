@@ -1,6 +1,6 @@
 package com.yzg.audioplayer.listener;
 
-public interface WlOnPcmInfoListener {
+public interface OnPcmInfoListener {
 
     void onPcmInfo(byte[] buffer, int buffersize);
 
