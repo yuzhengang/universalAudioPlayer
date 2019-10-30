@@ -374,8 +374,8 @@ void Audio::initOpenSLES() {
 
 }
 
-int Audio::getCurrentSampleRateForOpensles(int sample_rate) {
-    int rate = 0;
+SLuint32 Audio::getCurrentSampleRateForOpensles(int sample_rate) {
+    SLuint32 rate = 0000;
     switch (sample_rate)
     {
         case 8000:

@@ -2,11 +2,6 @@
 #include <string>
 #include "Playstatus.h"
 #include "FFmpeg.h"
-extern "C"
-{
-    #include <include/libavformat/avformat.h>
-}
-
 _JavaVM  *javaVM=NULL;
 CallJava   *callJava=NULL;
 FFmpeg  *fFmpeg=NULL;
