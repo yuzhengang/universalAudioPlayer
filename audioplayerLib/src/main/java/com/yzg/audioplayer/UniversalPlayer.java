@@ -28,6 +28,11 @@ import java.nio.ByteBuffer;
  */
 
 public class UniversalPlayer {
+
+    public   UniversalPlayer( ){
+
+    }
+
     static {
         System.loadLibrary("native-lib");
         System.loadLibrary("avcodec-57");

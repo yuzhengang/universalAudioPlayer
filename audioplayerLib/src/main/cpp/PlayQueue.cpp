@@ -2,9 +2,6 @@
 // Created by admin on 2019/10/23.
 //
 #include "PlayerQueue.h"
-#include "include/libavutil/mem.h"
-
-
 PlayQueue::PlayQueue(Playstatus *playstatus) {
     this->playstatus=playstatus;
     pthread_mutex_init(&mutexPacket,NULL);
