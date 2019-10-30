@@ -79,7 +79,7 @@ void *pcmCallBack(void *data)
                 }
                 if(audio->showPcm)
                 {
-                    audio->callJava->onCallPcmInfo(bf, audio->defaultPcmSize);
+                    audio->callJava->onCallPcmInfo(bf,audio->defaultPcmSize);
                 }
                 free(bf);
                 bf = NULL;
@@ -287,7 +287,7 @@ void pcmBufferCallBack(SLAndroidSimpleBufferQueueItf bf, void * context)
             {
                 wlAudio->last_tiem = wlAudio->clock;
                 //回调应用层
-                wlAudio->callJava->onCallTimeInfo(CHILD_THREAD, wlAudio->clock, wlAudio->duration);
+        //        wlAudio->callJava->onCallTimeInfo(CHILD_THREAD, wlAudio->clock, wlAudio->duration);
             }
 
             wlAudio->bufferQueue->putBuffer(wlAudio->sampleBuffer, buffersize * 4);

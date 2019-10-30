@@ -54,7 +54,20 @@ int  PlayBufferQueue::clearBuffer() {
     pthread_mutex_unlock(&mutexBuffer);
     return  0;
 }
+void PlayBufferQueue::release() {
 
+    if(LOG_DEBUG)
+    {
+        LOGE("WlBufferQueue::release");
+    }
+    noticeThread();
+    clearBuffer();
+
+    if(LOG_DEBUG)
+    {
+        LOGE("WlBufferQueue::release success");
+    }
+}
 int  PlayBufferQueue::getBufferSize() {
     int size=0;
     pthread_mutex_lock(&mutexBuffer);
