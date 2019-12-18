@@ -28,10 +28,13 @@ public:
     pthread_mutex_t seek_mutex;
 public:
     FFmpeg(Playstatus *playstatus, CallJava *callJava, const char *url);
+
     ~FFmpeg();
 
     void parpared();
+
     void decodeFFmpegThread();
+
     void start();
 
     void pause();

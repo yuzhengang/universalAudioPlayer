@@ -6,6 +6,7 @@ import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.yzg.audioplayer.listener.OnCompleteListener;
 import com.yzg.audioplayer.listener.OnErrorListener;
@@ -29,9 +30,6 @@ import java.nio.ByteBuffer;
 
 public class UniversalPlayer {
 
-    public   UniversalPlayer( ){
-
-    }
 
     static {
         System.loadLibrary("native-lib");
@@ -63,6 +61,16 @@ public class UniversalPlayer {
     private OnValumeDBListener onValumeDBListener;
     private OnRecordTimeListener onRecordTimeListener;
     private OnPcmInfoListener onPcmInfoListener;
+
+
+
+
+    public UniversalPlayer()
+    {
+
+    }
+
+
 
     /**
      * 设置数据源
@@ -116,7 +124,7 @@ public class UniversalPlayer {
 
     public void parpared() {
         if (TextUtils.isEmpty(source)) {
-            PlayerLog.d("source not be empty");
+            PlayerLog.e("source not be empty");
             return;
         }
         new Thread(new Runnable() {
@@ -130,7 +138,7 @@ public class UniversalPlayer {
     {
         if(TextUtils.isEmpty(source))
         {
-            PlayerLog.d("source is empty");
+            PlayerLog.e("source is empty");
             return;
         }
         new Thread(new Runnable() {
@@ -239,7 +247,7 @@ public class UniversalPlayer {
                 initmediacodec = true;
                 initMediacodec(audioSamplerate, outfile);
                 n_startstoprecord(true);
-                PlayerLog.d("开始录制");
+                PlayerLog.e("开始录制");
             }
         }
     }
@@ -250,20 +258,20 @@ public class UniversalPlayer {
         {
             n_startstoprecord(false);
             releaseMedicacodec();
-            PlayerLog.d("完成录制");
+            PlayerLog.e("完成录制");
         }
     }
 
     public void pauseRecord()
     {
         n_startstoprecord(false);
-        PlayerLog.d("暂停录制");
+        PlayerLog.e("暂停录制");
     }
 
     public void resumeRcord()
     {
         n_startstoprecord(true);
-        PlayerLog.d("继续录制");
+        PlayerLog.e("继续录制");
     }
 
     public void cutAudioPlay(int start_time, int end_time, boolean showPcm)
@@ -419,7 +427,7 @@ public class UniversalPlayer {
            encoder = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_AUDIO_AAC);
            info = new MediaCodec.BufferInfo();
            if(encoder==null){
-               PlayerLog.d("create encoder wrong");
+               PlayerLog.e("create encoder wrong");
                return;
            }
            recordTime=0;

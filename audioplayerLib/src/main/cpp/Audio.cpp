@@ -197,11 +197,11 @@ int Audio::resampleAudio(void **pcmbuf) {
             }
 
             nb = swr_convert(
-                swr_ctx,
-                &buffer,
-                avFrame->nb_samples,
-                (const uint8_t **) avFrame->data,
-                avFrame->nb_samples);
+                    swr_ctx,
+                    &buffer,
+                    avFrame->nb_samples,
+                    (const uint8_t **) avFrame->data,
+                    avFrame->nb_samples);
 
             int out_channels = av_get_channel_layout_nb_channels(AV_CH_LAYOUT_STEREO);
             data_size = nb * out_channels * av_get_bytes_per_sample(AV_SAMPLE_FMT_S16);
@@ -287,7 +287,7 @@ void pcmBufferCallBack(SLAndroidSimpleBufferQueueItf bf, void * context)
             {
                 wlAudio->last_tiem = wlAudio->clock;
                 //回调应用层
-        //        wlAudio->callJava->onCallTimeInfo(CHILD_THREAD, wlAudio->clock, wlAudio->duration);
+              wlAudio->callJava->onCallTimeInfo(CHILD_THREAD, wlAudio->clock, wlAudio->duration);
             }
 
             wlAudio->bufferQueue->putBuffer(wlAudio->sampleBuffer, buffersize * 4);
@@ -309,7 +309,6 @@ void pcmBufferCallBack(SLAndroidSimpleBufferQueueItf bf, void * context)
 }
 
 void Audio::initOpenSLES() {
-
     SLresult result;
     result = slCreateEngine(&engineObject, 0, 0, 0, 0, 0);
     result = (*engineObject)->Realize(engineObject, SL_BOOLEAN_FALSE);
@@ -338,7 +337,7 @@ void Audio::initOpenSLES() {
     SLDataFormat_PCM pcm={
             SL_DATAFORMAT_PCM,//播放pcm格式的数据
             2,//2个声道（立体声）
-            getCurrentSampleRateForOpensles(sample_rate),//44100hz的频率
+            (SLuint32)getCurrentSampleRateForOpensles(sample_rate),//44100hz的频率
             SL_PCMSAMPLEFORMAT_FIXED_16,//位数 16位
             SL_PCMSAMPLEFORMAT_FIXED_16,//和位数一致就行
             SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT,//立体声（前左前右）
@@ -374,8 +373,9 @@ void Audio::initOpenSLES() {
 
 }
 
-SLuint32 Audio::getCurrentSampleRateForOpensles(int sample_rate) {
-    SLuint32 rate = 0000;
+
+int Audio::getCurrentSampleRateForOpensles(int sample_rate) {
+    int rate = 0;
     switch (sample_rate)
     {
         case 8000:
@@ -582,10 +582,7 @@ void Audio::setMute(int mute) {
             (*pcmMutePlay)->SetChannelMute(pcmMutePlay, 1, false);
             (*pcmMutePlay)->SetChannelMute(pcmMutePlay, 0, false);
         }
-
-
     }
-
 }
 
 void Audio::setPitch(float pitch) {
@@ -622,8 +619,6 @@ int Audio::getPCMDB(char *pcmcata, size_t pcmsize) {
 }
 
 void Audio::startStopRecord(bool start) {
-
     this->isRecordPcm = start;
-
 }
 

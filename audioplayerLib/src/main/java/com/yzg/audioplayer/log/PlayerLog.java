@@ -8,8 +8,8 @@ import android.util.Log;
 
 public class PlayerLog {
 
-    public static void d(String msg)
+    public static void e(String msg)
     {
-        Log.d("yzg", msg);
+        Log.e("yzg", msg);
     }
 }

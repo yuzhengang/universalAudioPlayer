@@ -14,6 +14,7 @@ FFmpeg::FFmpeg(Playstatus *playstatus, CallJava *callJava, const char *url) {
 }
 void *decodeFFmpeg(void *data)
 {
+    LOGE("===============开始解码");
     FFmpeg *wlFFmpeg = (FFmpeg *) data;
     wlFFmpeg->decodeFFmpegThread();
     pthread_exit(&wlFFmpeg->decodeThread);
@@ -21,9 +22,8 @@ void *decodeFFmpeg(void *data)
 
 
 void FFmpeg::parpared() {
-
+    LOGE("===============开始准备");
     pthread_create(&decodeThread, NULL, decodeFFmpeg, this);
-
 }
 
 int avformat_callback(void *ctx)
@@ -37,6 +37,7 @@ int avformat_callback(void *ctx)
 }
 
 void FFmpeg::decodeFFmpegThread() {
+
 
     pthread_mutex_lock(&init_mutex);
     av_register_all();
@@ -52,8 +53,7 @@ void FFmpeg::decodeFFmpegThread() {
         {
             LOGE("can not open url :%s", url);
         }
-        const   char * errorMsg="can not open url";
-        callJava->onCallError(CHILD_THREAD, 1001, (char *) errorMsg);
+        callJava->onCallError(CHILD_THREAD, 1001, "can not open url");
         exit = true;
         pthread_mutex_unlock(&init_mutex);
         return;
@@ -64,8 +64,7 @@ void FFmpeg::decodeFFmpegThread() {
         {
             LOGE("can not find streams from %s", url);
         }
-        const  char * errorMsg="can not find streams from url";
-        callJava->onCallError(CHILD_THREAD, 1002, (char *) errorMsg);
+        callJava->onCallError(CHILD_THREAD, 1002, "can not find streams from url");
         exit = true;
         pthread_mutex_unlock(&init_mutex);
         return;
@@ -94,8 +93,7 @@ void FFmpeg::decodeFFmpegThread() {
         {
             LOGE("can not find decoder");
         }
-        const char * errorMsg="can not find decoder";
-        callJava->onCallError(CHILD_THREAD, 1003, (char *) errorMsg);
+        callJava->onCallError(CHILD_THREAD, 1003, "can not find decoder");
         exit = true;
         pthread_mutex_unlock(&init_mutex);
         return;
@@ -108,8 +106,7 @@ void FFmpeg::decodeFFmpegThread() {
         {
             LOGE("can not alloc new decodecctx");
         }
-        const char * errorMsg="can not alloc new decodecctx";
-        callJava->onCallError(CHILD_THREAD, 1004, (char *) errorMsg);
+        callJava->onCallError(CHILD_THREAD, 1004, "can not alloc new decodecctx");
         exit = true;
         pthread_mutex_unlock(&init_mutex);
         return;
@@ -121,8 +118,7 @@ void FFmpeg::decodeFFmpegThread() {
         {
             LOGE("can not fill decodecctx");
         }
-        const char * errorMsg="ccan not fill decodecctx";
-        callJava->onCallError(CHILD_THREAD, 1005, (char *) errorMsg);
+        callJava->onCallError(CHILD_THREAD, 1005, "ccan not fill decodecctx");
         exit = true;
         pthread_mutex_unlock(&init_mutex);
         return;
@@ -134,8 +130,7 @@ void FFmpeg::decodeFFmpegThread() {
         {
             LOGE("cant not open audio strames");
         }
-        const  char * errorMsg="cant not open audio strames";
-        callJava->onCallError(CHILD_THREAD, 1006, (char *) errorMsg);
+        callJava->onCallError(CHILD_THREAD, 1006, "cant not open audio strames");
         exit = true;
         pthread_mutex_unlock(&init_mutex);
         return;

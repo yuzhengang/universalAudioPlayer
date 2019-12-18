@@ -96,7 +96,7 @@ public:
 
     void initOpenSLES();
 
-    SLuint32 getCurrentSampleRateForOpensles(int sample_rate);
+    int getCurrentSampleRateForOpensles(int sample_rate);
 
     void pause();
 

@@ -3,12 +3,11 @@
 //
 #include "CallJava.h"
 CallJava::CallJava(_JavaVM *javaVM, JNIEnv *env, jobject *obj) {
-
+    LOGE("=================CallJava");
     this->javaVM = javaVM;
     this->jniEnv = env;
     this->jobj = *obj;
     this->jobj = env->NewGlobalRef(jobj);
-
     jclass  jlz = jniEnv->GetObjectClass(jobj);
     if(!jlz)
     {
@@ -28,6 +27,7 @@ CallJava::CallJava(_JavaVM *javaVM, JNIEnv *env, jobject *obj) {
     jmid_pcmtoaac = env->GetMethodID(jlz, "encodecPcmToAAc", "(I[B)V");
     jmid_pcminfo = env->GetMethodID(jlz, "onCallPcmInfo", "([BI)V");
     jmid_pcmrate = env->GetMethodID(jlz, "onCallPcmRate", "(I)V");
+
 }
 
 void CallJava::onCallParpared(int type) {

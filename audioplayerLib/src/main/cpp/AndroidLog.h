@@ -11,5 +11,5 @@
 
 #define LOG_DEBUG true
 
-#define LOGD(FORMAT,...) __android_log_print(ANDROID_LOG_DEBUG,"ywl5320",FORMAT,##__VA_ARGS__);
-#define LOGE(FORMAT,...) __android_log_print(ANDROID_LOG_ERROR,"ywl5320",FORMAT,##__VA_ARGS__);
+#define LOGD(FORMAT,...) __android_log_print(ANDROID_LOG_DEBUG,"yzg",FORMAT,##__VA_ARGS__);
+#define LOGE(FORMAT,...) __android_log_print(ANDROID_LOG_ERROR,"yzg",FORMAT,##__VA_ARGS__);
