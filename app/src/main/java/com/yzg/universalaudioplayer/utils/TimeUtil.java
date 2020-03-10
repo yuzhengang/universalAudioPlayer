@@ -1,4 +1,4 @@
-package com.yzg.universalaudioplayer;
+package com.yzg.universalaudioplayer.utils;
 
 /**
  * Created by admin on 2019/12/18.

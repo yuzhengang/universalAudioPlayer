@@ -1,4 +1,4 @@
-package com.yzg.universalaudioplayer;
+package com.yzg.universalaudioplayer.activity;
 
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +22,9 @@ import com.yzg.audioplayer.listener.OnTimeInfoListener;
 import com.yzg.audioplayer.listener.OnValumeDBListener;
 import com.yzg.audioplayer.log.PlayerLog;
 
+import com.yzg.universalaudioplayer.R;
+import com.yzg.universalaudioplayer.utils.TimeUtil;
+
 import java.io.File;
 
 
@@ -33,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar seekBarVolume;
     private int position = 0;
     private boolean isSeekBar = false;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
