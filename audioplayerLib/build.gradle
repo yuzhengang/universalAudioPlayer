@@ -1,9 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
-
+    compileSdkVersion 26
     splits {
         abi {
             enable true
@@ -18,8 +16,8 @@ android {
         }
     }
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion 19
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -35,8 +33,6 @@ android {
             }
         }
     }
-
-
     buildTypes {
         release {
             minifyEnabled false
