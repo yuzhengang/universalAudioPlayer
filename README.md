@@ -1,4 +1,14 @@
-# universalAudioPlayer
-C++  NDK  FFmpeg  OpenSL ES 音频播放器
+## C++  NDK  FFmpeg  OpenSL ES 音频播放器
+
+## 使用方法
+###  在project的build.gradle添加如下代码
+---
+allprojects {
+	    repositories {
+	        ...
+	        maven { url "https://jitpack.io" }
+	    }
+	}
+---
 
 
