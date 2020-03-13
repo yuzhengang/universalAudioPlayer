@@ -357,7 +357,6 @@ void FFmpeg::startStopRecord(bool start) {
     {
         audio->startStopRecord(start);
     }
-
 }
 
 bool FFmpeg::cutAudioPlay(int start_time, int end_time, bool showPcm) {
