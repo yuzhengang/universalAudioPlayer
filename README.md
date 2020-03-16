@@ -22,9 +22,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
 #### 接入代码
-  *1、播放音频*
+  *播放音频*
       
-     UniversalPlayer player=new UniversalPlayer();
+     UniversalPlayer player= UniversalPlayer.getInstance();
      player.setSource("http://file.kuyinyun.com/group1/M00/90/B7/rBBGdFPXJNeAM-nhABeMElAM6bY151.mp3"); //设置音频源
      player.setVolume(65); //设置音量 65%
      player.setSpeed(1.0f); //设置播放速度 (1.0正常) 范围：0.25---4.0f
@@ -56,7 +56,25 @@
        }
     });
     
-    
+ #### API介绍（v1.0.1）   
+ 
+     public void setSource(String source) //设置音频源
+       
+     public void parpared() //准备播放
+     
+     public void start() //开始播放
+
+     public void pause() //暂停播放
+     
+     public void resume() //恢复播放（对应于暂停）
+     
+     public void stop() //停止播放，回收资源
+     
+     
+     
+     
+     
+     
     
     
     
