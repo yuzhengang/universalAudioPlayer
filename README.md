@@ -80,11 +80,36 @@
      
      public int  getDuration() //获取时长
      
+     public int getVolumePercent()//获取当前音量
+     
      public void setSpeed(int speed) //设置播放速度（默认正常速度 1.0 范围：0.25x ~ 4.0x）
     
      public void setPitch(float pitch) //设置音频音调（默认正常音调 1.0 范围：0.25x ~ 4.0x）   
      
      public void setMute(MuteEnum mute) //设置播放声道 （MuteEnum.MUTE_LEFT,MuteEnum.MUTE_RIGHT,MuteEnum.MUTE_CENTER）
+     
+     public void startRecord(File outfile) //开始录制音频
+     
+     public void stopRecord() // 停止录制
+          
+     public void pauseRecord() //暂停录制
+
+     public void resumeRecord() //恢复录制
+     
+     public void setOnErrorListener(OnErrorListener onErrorListener) //出错回调
+     
+     public void setOnLoadListener(OnLoadListener onLoadListener) //加载回调
+     
+     public void setOnTimeInfoListener(OnTimeInfoListener onTimeInfoListener) //播放进度回调
+     
+     public void setOnParparedListener(OnParparedListener onParparedListener) //准备播放完成回调
+     
+     public void setOnCompleteListener(OnCompleteListener onCompleteListener) //播放完成回调
+
+     public void setOnPauseResumeListener(OnPauseResumeListener onPauseResumeListener) //暂停、恢复回调
+     
+     public void setOnVolumeDBListener(OnVolumeDBListener onVolumeDBListener) //声音分贝大小回调
+     
      
      
      
