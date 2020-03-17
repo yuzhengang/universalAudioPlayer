@@ -111,8 +111,8 @@
      public void setOnVolumeDBListener(OnVolumeDBListener onVolumeDBListener)//声音分贝大小回调
      
      
+     [技术要点说明](https://github.com/yuzhengang/universalAudioPlayer/blob/master/%E6%8A%80%E6%9C%AF%E8%AF%B4%E6%98%8E.md)
      
-     
-     
+    
      
      
