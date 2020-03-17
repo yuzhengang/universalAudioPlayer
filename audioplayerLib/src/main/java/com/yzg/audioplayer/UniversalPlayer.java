@@ -42,7 +42,7 @@ public class UniversalPlayer {
         System.loadLibrary("swresample-2");
         System.loadLibrary("swscale-4");
     }
-
+    private boolean isPlaying = false;
     private static String source;//数据源
     private static PlayTimeInfoBean wlTimeInfoBean;
     private static boolean playNext = false;
@@ -61,16 +61,29 @@ public class UniversalPlayer {
     private OnValumeDBListener onValumeDBListener;
     private OnRecordTimeListener onRecordTimeListener;
     private OnPcmInfoListener onPcmInfoListener;
-
-
-
+    public static UniversalPlayer instance = null;
+    public boolean isPlaying() {
+        return isPlaying;
+    }
 
     public UniversalPlayer()
     {
 
     }
-
-
+    public static synchronized UniversalPlayer getInstance()
+    {
+        if(instance == null)
+        {
+            synchronized (UniversalPlayer.class)
+            {
+                if(instance == null)
+                {
+                    instance = new UniversalPlayer();
+                }
+            }
+        }
+        return instance;
+    }
 
     /**
      * 设置数据源
@@ -90,7 +103,7 @@ public class UniversalPlayer {
         this.onParparedListener = onParparedListener;
     }
 
-    public void setWlOnLoadListener(OnLoadListener onLoadListener) {
+    public void setOnLoadListener(OnLoadListener onLoadListener) {
         this.onLoadListener = onLoadListener;
     }
 
@@ -141,6 +154,10 @@ public class UniversalPlayer {
             PlayerLog.e("source is empty");
             return;
         }
+        if(isPlaying)
+        {
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -149,6 +166,7 @@ public class UniversalPlayer {
                 setPitch(pitch);
                 setSpeed(speed);
                 n_start();
+                isPlaying=true;
             }
         }).start();
     }
@@ -179,6 +197,7 @@ public class UniversalPlayer {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                isPlaying = false;
                 n_stop();
             }
         }).start();

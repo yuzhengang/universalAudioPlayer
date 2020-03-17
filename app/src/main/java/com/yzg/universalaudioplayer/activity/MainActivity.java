@@ -29,36 +29,37 @@ import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
-    private UniversalPlayer wlPlayer;
+    private UniversalPlayer player;
     private TextView tvTime;
     private TextView tvVolume;
-    private SeekBar seekBarSeek;
+    private SeekBar seekBar;
     private SeekBar seekBarVolume;
     private int position = 0;
     private boolean isSeekBar = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvTime = (TextView) findViewById(R.id.tv_time);
-        seekBarSeek = (SeekBar) findViewById(R.id.seekbar_seek);
+        seekBar = (SeekBar) findViewById(R.id.seekbar_seek);
         seekBarVolume = (SeekBar) findViewById(R.id.seekbar_volume);
         tvVolume = (TextView) findViewById(R.id.tv_volume);
-        wlPlayer = new UniversalPlayer();
-        wlPlayer.setVolume(80);
-        wlPlayer.setPitch(1.0f);
-        wlPlayer.setSpeed(1.0f);
-        wlPlayer.setMute(MuteEnum.MUTE_LEFT);
-        tvVolume.setText("音量：" + wlPlayer.getVolumePercent() + "%");
-        seekBarVolume.setProgress(wlPlayer.getVolumePercent());
-        wlPlayer.setOnParparedListener(new OnParparedListener() {
+        player = new UniversalPlayer();
+        player.setVolume(80);
+        player.setPitch(1.0f);
+        player.setSpeed(1.0f);
+        player.setMute(MuteEnum.MUTE_LEFT);
+        tvVolume.setText("音量：" + player.getVolumePercent() + "%");
+        seekBarVolume.setProgress(player.getVolumePercent());
+        player.setOnParparedListener(new OnParparedListener() {
             @Override
             public void onParpared() {
                 Log.e("======================","准备好了，可以开始播放声音了");
-                wlPlayer.start();
+                player.start();
             }
         });
-        wlPlayer.setWlOnLoadListener(new OnLoadListener() {
+        player.setOnLoadListener(new OnLoadListener() {
             @Override
             public void onLoad(boolean load) {
                 if(load)
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        wlPlayer.setOnPauseResumeListener(new OnPauseResumeListener() {
+        player.setOnPauseResumeListener(new OnPauseResumeListener() {
             @Override
             public void onPause(boolean pause) {
                 if(pause)
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        wlPlayer.setOnTimeInfoListener(new OnTimeInfoListener() {
+        player.setOnTimeInfoListener(new OnTimeInfoListener() {
             @Override
             public void onTimeInfo(PlayTimeInfoBean timeInfoBean) {
                 Message message = Message.obtain();
@@ -95,27 +96,27 @@ public class MainActivity extends AppCompatActivity {
                 handler.sendMessage(message);
             }
         });
-        wlPlayer.setOnErrorListener(new OnErrorListener() {
+        player.setOnErrorListener(new OnErrorListener() {
             @Override
             public void onError(int code, String msg) {
                 PlayerLog.e("code:" + code + ", msg:" + msg);
             }
         });
-        wlPlayer.setOnCompleteListener(new OnCompleteListener() {
+        player.setOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete() {
                 PlayerLog.e("播放完成了");
             }
         });
 
-        wlPlayer.setOnValumeDBListener(new OnValumeDBListener() {
+        player.setOnValumeDBListener(new OnValumeDBListener() {
             @Override
             public void onDbValue(int db) {
 //                MyLog.d("db is: " + db);
             }
         });
 
-        wlPlayer.setOnRecordTimeListener(new OnRecordTimeListener() {
+        player.setOnRecordTimeListener(new OnRecordTimeListener() {
             @Override
             public void onRecordTime(int recordTime) {
                 PlayerLog.e("record time is " + recordTime);
@@ -123,12 +124,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        seekBarSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(wlPlayer.getDuration() > 0 && isSeekBar)
+                if(player.getDuration() > 0 && isSeekBar)
                 {
-                    position = wlPlayer.getDuration() * progress / 100;
+                    position = player.getDuration() * progress / 100;
                 }
             }
 
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                wlPlayer.seek(position);
+                player.seek(position);
                 isSeekBar = false;
             }
         });
@@ -147,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
         seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                wlPlayer.setVolume(progress);
-                tvVolume.setText("音量：" + wlPlayer.getVolumePercent() + "%");
+                player.setVolume(progress);
+                tvVolume.setText("音量：" + player.getVolumePercent() + "%");
                 Log.d("yzg", "progress is " + progress);
             }
 
@@ -166,18 +167,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void begin(View view) {
-        wlPlayer.setSource("http://file.kuyinyun.com/group1/M00/90/B7/rBBGdFPXJNeAM-nhABeMElAM6bY151.mp3");
-        wlPlayer.parpared();
+        player.setSource("http://file.kuyinyun.com/group1/M00/90/B7/rBBGdFPXJNeAM-nhABeMElAM6bY151.mp3");
+        player.parpared();
     }
 
     public void pause(View view) {
 
-        wlPlayer.pause();
+        player.pause();
 
     }
 
     public void resume(View view) {
-        wlPlayer.resume();
+        player.resume();
     }
 
     Handler handler = new Handler(){
@@ -190,71 +191,71 @@ public class MainActivity extends AppCompatActivity {
                 {
                     PlayTimeInfoBean wlTimeInfoBean = (PlayTimeInfoBean) msg.obj;
                     tvTime.setText(TimeUtil.secdsToDateFormat(wlTimeInfoBean.getTotalTime(), wlTimeInfoBean.getTotalTime()) + "/" + TimeUtil.secdsToDateFormat(wlTimeInfoBean.getCurrentTime(), wlTimeInfoBean.getTotalTime()));
-                    seekBarSeek.setProgress(wlTimeInfoBean.getCurrentTime() * 100 / wlTimeInfoBean.getTotalTime());
+                    seekBar.setProgress(wlTimeInfoBean.getCurrentTime() * 100 / wlTimeInfoBean.getTotalTime());
                 }
             }
         }
     };
 
     public void stop(View view) {
-        wlPlayer.stop();
+        player.stop();
     }
 
     public void seek(View view) {
-        wlPlayer.seek(215);
+        player.seek(215);
     }
 
     public void next(View view) {
-        wlPlayer.playNext("/mnt/shared/Other/林俊杰 - 背对背拥抱.ape");
+        player.playNext("/mnt/shared/Other/林俊杰 - 背对背拥抱.ape");
     }
 
     public void left(View view) {
-        wlPlayer.setMute(MuteEnum.MUTE_LEFT);
+        player.setMute(MuteEnum.MUTE_LEFT);
     }
 
     public void right(View view) {
-        wlPlayer.setMute(MuteEnum.MUTE_RIGHT);
+        player.setMute(MuteEnum.MUTE_RIGHT);
     }
 
     public void center(View view) {
-        wlPlayer.setMute(MuteEnum.MUTE_CENTER);
+        player.setMute(MuteEnum.MUTE_CENTER);
     }
 
     public void speed(View view) {
-        wlPlayer.setSpeed(1.5f);
-        wlPlayer.setPitch(1.0f);
+        player.setSpeed(1.5f);
+        player.setPitch(1.0f);
     }
 
     public void pitch(View view) {
-        wlPlayer.setPitch(1.5f);
-        wlPlayer.setSpeed(1.0f);
+        player.setPitch(1.5f);
+        player.setSpeed(1.0f);
     }
 
     public void speedpitch(View view) {
-        wlPlayer.setSpeed(1.5f);
-        wlPlayer.setPitch(1.5f);
+        player.setSpeed(1.5f);
+        player.setPitch(1.5f);
     }
 
     public void normalspeedpitch(View view) {
-        wlPlayer.setSpeed(1.0f);
-        wlPlayer.setPitch(1.0f);
+        player.setSpeed(1.0f);
+        player.setPitch(1.0f);
     }
 
     public void start_record(View view) {
 
-        wlPlayer.startRecord(new File("/mnt/shared/Other/textplayer-1.aac"));
+        player.startRecord(new File("/mnt/shared/Other/textplayer-1.aac"));
 
     }
 
     public void pause_record(View view) {
-        wlPlayer.pauseRecord();
+        player.pauseRecord();
     }
 
     public void goon_record(View view) {
-        wlPlayer.resumeRcord();
+        player.resumeRcord();
     }
 
     public void stop_record(View view) {
-        wlPlayer.stopRecord();
+        player.stopRecord();
     }
 }
