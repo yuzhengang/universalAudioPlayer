@@ -72,10 +72,22 @@
      
      public boolean isPlaying(); //是否正在播放中
      
+     public void playNext(String source) //切换播放源
+
+     public void seek(int secds) //secds：时间（秒） 
+
+     public void setVolume(int percent) //设置音量（0~100）
      
+     public int  getDuration() //获取时长
      
-     
-     
+     public void setSpeed(int speed) //设置播放速度（默认正常速度 1.0 范围：0.25x ~ 4.0x）
     
-    
-    
+     public void setPitch(float pitch) //设置音频音调（默认正常音调 1.0 范围：0.25x ~ 4.0x）   
+     
+     public void setMute(MuteEnum mute) //设置播放声道 （MuteEnum.MUTE_LEFT,MuteEnum.MUTE_RIGHT,MuteEnum.MUTE_CENTER）
+     
+     
+     
+     
+     
+     
