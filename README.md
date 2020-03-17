@@ -108,7 +108,7 @@
 
      public void setOnPauseResumeListener(OnPauseResumeListener onPauseResumeListener) //暂停、恢复回调
      
-     public void setOnVolumeDBListener(OnVolumeDBListener onVolumeDBListener) //声音分贝大小回调
+     public void setOnVolumeDBListener(OnVolumeDBListener onVolumeDBListener)//声音分贝大小回调
      
      
      
