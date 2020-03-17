@@ -70,6 +70,7 @@
      
      public void stop() //停止播放，回收资源
      
+     public boolean isPlaying(); //是否正在播放中
      
      
      
