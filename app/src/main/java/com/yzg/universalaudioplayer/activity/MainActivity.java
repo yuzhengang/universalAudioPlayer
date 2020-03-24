@@ -1,5 +1,6 @@
 package com.yzg.universalaudioplayer.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -150,24 +151,25 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 player.setVolume(progress);
                 tvVolume.setText("音量：" + player.getVolumePercent() + "%");
-                Log.d("yzg", "progress is " + progress);
+                Log.e("===========yzg_onProgressChanged", "progress is " + progress);
             }
 
+            @SuppressLint("LongLogTag")
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                Log.e("============yzg_onStartTrackingTouch", "progress is " + seekBar.getProgress()+"");
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                Log.e("============yzg_onStopTrackingTouch", "progress is " +  seekBar.getProgress()+"");
             }
         });
 
     }
 
     public void begin(View view) {
-        player.setSource("http://file.kuyinyun.com/group1/M00/90/B7/rBBGdFPXJNeAM-nhABeMElAM6bY151.mp3");
+        player.setSource("http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4");
         player.parpared();
     }
 
